@@ -1,10 +1,13 @@
 import 'package:flame/collisions.dart';
 import 'package:flame/components.dart';
+import 'package:pinkie_tutorial/flame_layer/pinkie_game.dart';
 
-class Pinkie extends SpriteComponent with HasGameRef {
+class Pinkie extends SpriteComponent with HasGameRef<PinkieGame> {
   Pinkie() : super(position: Vector2.all(100), size: Vector2.all(100)) {
     debugMode = true;
   }
+
+  double speed = 10.0;
 
   @override
   Future<void> onLoad() async {
@@ -16,7 +19,6 @@ class Pinkie extends SpriteComponent with HasGameRef {
 
   @override
   void update(double dt) {
-    x += 1;
-    // y += 1;
+    position.add(gameRef.joystick.delta * speed * dt);
   }
 }
