@@ -6,6 +6,8 @@ import 'package:pinkie_tutorial/flame_layer/flame_layer.dart';
 import 'flutter_layer/flutter_layer.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
+import 'flutter_layer/main_drawer.dart';
+
 void main() {
   WidgetsFlutterBinding.ensureInitialized();
   Flame.device.setLandscape();
@@ -31,9 +33,14 @@ class PinkieApp extends StatelessWidget {
       home: BlocProvider<ScoreBloc>(
         create: (context) => ScoreBloc(),
         child: Scaffold(
+            appBar: AppBar(
+              backgroundColor: Colors.black,
+              foregroundColor: Colors.orange,
+            ),
+            drawer: const MainDrawer(),
             body: Stack(
-          children: const [FlameLayer(), FlutterLayer()],
-        )),
+              children: const [FlameLayer(), FlutterLayer()],
+            )),
       ),
     );
   }

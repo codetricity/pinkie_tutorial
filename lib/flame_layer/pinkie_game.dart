@@ -5,6 +5,7 @@ import 'package:flame_bloc/flame_bloc.dart';
 import 'package:flutter/material.dart';
 import 'package:pinkie_tutorial/actors/pinkie.dart';
 import 'package:pinkie_tutorial/blocs/score/score_bloc.dart';
+import 'dart:ui';
 
 import '../actors/treasure.dart';
 
@@ -18,15 +19,20 @@ class PinkieGame extends FlameGame with HasCollisionDetection, HasDraggables {
   @override
   Future<void> onLoad() async {
     await super.onLoad();
-    camera.viewport = FixedResolutionViewport(Vector2(1400, 784));
+    var physicalSize = window.physicalSize;
+    camera.viewport = FixedResolutionViewport(
+        Vector2(physicalSize.width, physicalSize.height));
+    // camera.viewport = FixedResolutionViewport(Vector2(1400, 832));
     add(SpriteComponent(sprite: await loadSprite('background.png'))
       ..size = size);
 
-    add(FlameBlocProvider.value(value: scoreBloc, children: [
-      Treasure(treasurePosition: Vector2(300, 100)),
-      Treasure(treasurePosition: Vector2(600, 100)),
-      Pinkie()
-    ]));
+    add(FlameBlocProvider<ScoreBloc, ScoreState>.value(
+        value: scoreBloc,
+        children: [
+          Treasure(treasurePosition: Vector2(300, 100)),
+          Treasure(treasurePosition: Vector2(600, 100)),
+          Pinkie()
+        ]));
 
     final knobPaint = BasicPalette.blue.withAlpha(200).paint();
     final backgroundPaint = BasicPalette.blue.withAlpha(100).paint();

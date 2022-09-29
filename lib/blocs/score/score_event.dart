@@ -8,3 +8,9 @@ abstract class ScoreEvent extends Equatable {
 }
 
 class IncreaseScoreEvent extends ScoreEvent {}
+
+class ChangeGemScoreEvent extends ScoreEvent {
+  final GemType gemType;
+
+  const ChangeGemScoreEvent({required this.gemType});
+}
