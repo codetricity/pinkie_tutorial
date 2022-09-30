@@ -31,6 +31,8 @@ class PinkieGame extends FlameGame with HasCollisionDetection, HasDraggables {
         children: [
           Treasure(treasurePosition: Vector2(300, 100)),
           Treasure(treasurePosition: Vector2(600, 100)),
+          Treasure(treasurePosition: Vector2(500, 400)),
+          Treasure(treasurePosition: Vector2(800, 500)),
           Pinkie()
         ]));
 
