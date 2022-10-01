@@ -22,6 +22,7 @@ class MainDrawer extends StatelessWidget {
           context
               .read<ScoreBloc>()
               .add(const ChangeGemScoreEvent(gemType: GemType.red));
+          Navigator.pop(context);
         },
       ),
       ListTile(
@@ -35,6 +36,7 @@ class MainDrawer extends StatelessWidget {
           context
               .read<ScoreBloc>()
               .add(const ChangeGemScoreEvent(gemType: GemType.pink));
+          Navigator.pop(context);
         },
       ),
       ListTile(
@@ -48,6 +50,7 @@ class MainDrawer extends StatelessWidget {
           context
               .read<ScoreBloc>()
               .add(const ChangeGemScoreEvent(gemType: GemType.green));
+          Navigator.pop(context);
         },
       ),
     ]));

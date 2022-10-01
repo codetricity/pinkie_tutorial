@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:pinkie_tutorial/blocs/level/level_cubit.dart';
 
 import '../blocs/score/score_bloc.dart';
 import 'rich_dialog.dart';
@@ -31,6 +32,11 @@ class FlutterLayer extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
           children: [
             Text('Score: ${state.score}'),
+            BlocBuilder<LevelCubit, LevelState>(
+              builder: (context, state) {
+                return Text('Level: ${state.level}');
+              },
+            ),
             TextButton(
               onPressed: () {
                 context.read<ScoreBloc>().add(IncreaseScoreEvent());

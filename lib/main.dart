@@ -1,5 +1,6 @@
 import 'package:flame/flame.dart';
 import 'package:flutter/material.dart';
+import 'package:pinkie_tutorial/blocs/level/level_cubit.dart';
 import 'package:pinkie_tutorial/blocs/score/score_bloc.dart';
 import 'package:pinkie_tutorial/flame_layer/flame_layer.dart';
 
@@ -30,8 +31,16 @@ class PinkieApp extends StatelessWidget {
                   foregroundColor: Colors.orange,
                   backgroundColor: Colors.blueGrey,
                   textStyle: const TextStyle(fontSize: 24)))),
-      home: BlocProvider<ScoreBloc>(
-        create: (context) => ScoreBloc(),
+      home: MultiBlocProvider(
+        providers: [
+          BlocProvider<LevelCubit>(
+            create: (context) => LevelCubit(),
+          ),
+          BlocProvider<ScoreBloc>(
+            create: (context) =>
+                ScoreBloc(levelCubit: context.read<LevelCubit>()),
+          ),
+        ],
         child: Scaffold(
             appBar: AppBar(
               backgroundColor: Colors.black,
