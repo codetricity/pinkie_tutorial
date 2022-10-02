@@ -59,7 +59,19 @@ class Treasure extends SpriteAnimationComponent
     greenGemAnimation = SpriteAnimation.spriteList(
         await loadGemSprites(GemType.green),
         stepTime: 0.1);
-    animation = redGemAnimation;
+    switch (gameRef.scoreBloc.state.gemType) {
+      case GemType.pink:
+        animation = pinkGemAnimation;
+        break;
+      case GemType.green:
+        animation = greenGemAnimation;
+        break;
+      case GemType.red:
+        animation = redGemAnimation;
+        break;
+    }
+
+    // animation = redGemAnimation;
   }
 
   @override
