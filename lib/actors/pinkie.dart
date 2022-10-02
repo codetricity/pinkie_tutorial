@@ -3,7 +3,10 @@ import 'package:flame/components.dart';
 import 'package:flame/flame.dart';
 import 'package:pinkie_tutorial/flame_layer/pinkie_game.dart';
 
-class Pinkie extends SpriteAnimationComponent with HasGameRef<PinkieGame> {
+enum PinkieAnimationState { idle, running }
+
+class Pinkie extends SpriteAnimationGroupComponent<PinkieAnimationState>
+    with HasGameRef<PinkieGame> {
   Pinkie() : super(position: Vector2.all(100), size: Vector2.all(100)) {
     // debugMode = true;
   }
@@ -29,7 +32,11 @@ class Pinkie extends SpriteAnimationComponent with HasGameRef<PinkieGame> {
         amount: 12, stepTime: 0.05, textureSize: Vector2.all(32));
     var runImage = await Flame.images.load('pinkie_run.png');
     runAnimation = SpriteAnimation.fromFrameData(runImage, runData);
-    animation = runAnimation;
+    animations = {
+      PinkieAnimationState.running: runAnimation,
+      PinkieAnimationState.idle: idleAnimation
+    };
+    current = PinkieAnimationState.idle;
   }
 
   @override
@@ -37,9 +44,9 @@ class Pinkie extends SpriteAnimationComponent with HasGameRef<PinkieGame> {
     position.add(gameRef.joystick.delta * speed * dt);
 
     if (gameRef.joystick.delta[0] > -0.01 && gameRef.joystick.delta[0] < 0.01) {
-      animation = idleAnimation;
+      current = PinkieAnimationState.idle;
     } else {
-      animation = runAnimation;
+      current = PinkieAnimationState.running;
     }
 
     if (gameRef.joystick.delta[0] < 0) {
