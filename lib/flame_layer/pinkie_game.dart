@@ -1,9 +1,11 @@
 import 'package:flame/components.dart';
 import 'package:flame/game.dart';
+import 'scene.dart';
 import 'package:flame/palette.dart';
 import 'package:flame_bloc/flame_bloc.dart';
 import 'package:flutter/material.dart';
 import 'package:pinkie_tutorial/actors/pinkie.dart';
+import 'package:pinkie_tutorial/blocs/level/level_cubit.dart';
 import 'package:pinkie_tutorial/blocs/score/score_bloc.dart';
 import 'dart:ui';
 
@@ -11,8 +13,9 @@ import '../actors/treasure.dart';
 
 class PinkieGame extends FlameGame with HasCollisionDetection, HasDraggables {
   final ScoreBloc scoreBloc;
+  final LevelCubit levelCubit;
 
-  PinkieGame({required this.scoreBloc});
+  PinkieGame({required this.scoreBloc, required this.levelCubit});
 
   late JoystickComponent joystick;
 
@@ -26,17 +29,15 @@ class PinkieGame extends FlameGame with HasCollisionDetection, HasDraggables {
     add(SpriteComponent(sprite: await loadSprite('background.png'))
       ..size = size);
 
-    add(FlameBlocProvider<ScoreBloc, ScoreState>.value(
-        value: scoreBloc,
-        children: [
-          Treasure(treasurePosition: Vector2(300, 100)),
-          Treasure(treasurePosition: Vector2(600, 100)),
-          Treasure(treasurePosition: Vector2(500, 400)),
-          Treasure(treasurePosition: Vector2(800, 500)),
-          Treasure(treasurePosition: Vector2(650, 300)),
-          Treasure(treasurePosition: Vector2(750, 200)),
-          Pinkie()
-        ]));
+    add(FlameMultiBlocProvider(
+      providers: [
+        FlameBlocProvider<ScoreBloc, ScoreState>.value(value: scoreBloc),
+        FlameBlocProvider<LevelCubit, LevelState>.value(value: levelCubit),
+      ],
+      children: [
+        Scene(),
+      ],
+    ));
 
     final knobPaint = BasicPalette.blue.withAlpha(200).paint();
     final backgroundPaint = BasicPalette.blue.withAlpha(100).paint();
