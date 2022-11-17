@@ -1,6 +1,8 @@
 # Pinkie Tutorial
 
-Flame BLoC tutorial.
+Flame BLoC tutorial. Learn Flutter BLoC by building games.
+
+![communication](docs/bloc_communication.png)
 
 ## Art Credits
 
